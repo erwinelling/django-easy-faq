@@ -1,4 +1,5 @@
 from django.contrib import admin
+from ordered_model.admin import OrderedModelAdmin
 from .models import *
 from django.conf import settings
 from . import forms
@@ -20,8 +21,8 @@ class AnswerAdmin(admin.ModelAdmin):
     search_fields = ['answer', "question"]
     readonly_fields = ('helpful',"not_helpful")
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name","slug" ,"description")
+class CategoryAdmin(OrderedModelAdmin):
+    list_display = ("name", 'move_up_down_links', "slug" ,"description")
     search_fields = ['name', "description"]
 
 class CommentAdmin(admin.ModelAdmin):
@@ -29,8 +30,8 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('question', "post_time")
     search_fields = ['comment', "question"]
 
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("question","category" ,"slug","helpful", "not_helpful")
+class QuestionAdmin(OrderedModelAdmin):
+    list_display = ("question", 'move_up_down_links', "category" ,"slug","helpful", "not_helpful")
     list_filter = ('helpful', "not_helpful","category")
     search_fields = ["question"]
     readonly_fields = ('helpful',"not_helpful")
