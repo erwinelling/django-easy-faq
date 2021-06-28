@@ -10,13 +10,14 @@ Quick start
 
 1. pip install::
 
-    pip install https://github.com/dragoncommits/django-easy-faq/blob/master/dist/django-easy-faq-0.5.tar.gz?raw=true
+    pip install https://github.com/erwinelling/django-easy-faq/archive/refs/heads/master.zip
 
-1. Add "easy-faq" to your INSTALLED_APPS setting like this::
+1. Add "easy-faq" and "ordered_model" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         ...
         'faq',
+        'ordered_model',
     ]
 
 2. Include the easy-faq URLconf in your project urls.py like this::
