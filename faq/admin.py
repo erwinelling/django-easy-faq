@@ -31,7 +31,7 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ['comment', "question"]
 
 class QuestionAdmin(OrderedModelAdmin):
-    list_display = ("question", "move_up_down_links")
+    list_display = ("question", "move_up_down_links", "category" ,"slug", "helpful", "not_helpful")
     list_filter = ('helpful', "not_helpful", "category")
     search_fields = ["question"]
     readonly_fields = ('helpful',"not_helpful")
