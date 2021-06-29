@@ -2,9 +2,10 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.shortcuts import reverse
 from django.conf import settings
+from ordered_model.models import OrderedModel
 from . import snippets
 # Create your models here.
-class Question(models.Model):
+class Question(OrderedModel):
     category = models.ForeignKey("category",on_delete=models.SET_NULL,null=True,blank=True)
     question = models.CharField(max_length=150, unique=True)
     slug     = models.SlugField(max_length=150, unique=True)
@@ -33,6 +34,9 @@ class Question(models.Model):
         else:
             return reverse("faq:question_detail", args=(self.slug,))
 
+    class Meta(OrderedModel.Meta):
+        pass
+
 class Answer(models.Model):
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
     answer   = models.TextField()
@@ -49,9 +53,6 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer
 
-    class Meta:
-        order_with_respect_to = 'question'
-
     def save(self,*args,**kwargs):
         # if first time saving add a new slug
         if not self.pk:
@@ -63,7 +64,7 @@ class Answer(models.Model):
         self.not_helpful=self.get_not_helpful()
         super().save(*args,**kwargs)
 
-class Category(models.Model):
+class Category(OrderedModel):
     name        = models.CharField(max_length=50,unique=True)
     description = models.TextField()
     slug        =models.SlugField(max_length=50,unique=True)
@@ -71,7 +72,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(OrderedModel.Meta):
         verbose_name_plural = "categories"
 
     def save(self,*args, **kwargs):
