@@ -53,9 +53,6 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer
 
-    class Meta(OrderedModel.Meta):
-        order_with_respect_to = ('question',)
-
     def save(self,*args,**kwargs):
         # if first time saving add a new slug
         if not self.pk:
@@ -75,7 +72,7 @@ class Category(OrderedModel):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(OrderedModel.Meta):
         verbose_name_plural = "categories"
 
     def save(self,*args, **kwargs):
